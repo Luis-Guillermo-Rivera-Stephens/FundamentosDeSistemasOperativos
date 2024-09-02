@@ -5,6 +5,22 @@
 #include <sys/wait.h>
 
 int main() {
+
+    FILE *archivo = fopen("pid.txt", "r"); 
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo");
+        return -1;
+    }
+
+    int pid;
+    if (fscanf(archivo, "%d", &pid) != 1) {  
+        printf("Error al leer el PID del archivo");
+        fclose(archivo);
+        return 0;
+    }
+
+    fclose(archivo);
+    
     char command[100];
     char *args[20];
 
@@ -20,7 +36,7 @@ int main() {
         }
         if (strcmp(command, "shutdown") == 0) {
             printf("Apagando...\n");
-            kill(0, SIGKILL);
+            kill(pid, SIGTERM);
         }
 
         int i = 0;
