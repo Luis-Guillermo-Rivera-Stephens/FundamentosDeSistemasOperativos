@@ -20,7 +20,7 @@ int init(){
         }
     }
     while(1){
-        wait(NULL)
+        wait(NULL);
         if (fork() == 0) {
             execlp("xterm", "xterm", "-e", "./getty.exe", pid_padre, NULL);
         }
