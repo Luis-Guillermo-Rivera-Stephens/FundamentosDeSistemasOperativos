@@ -13,7 +13,7 @@ int init(){
         }
     }
     wait(NULL);
-    kill(0, SIGKILL)
+    kill(0, SIGKILL);
 }
 
 int main(){
