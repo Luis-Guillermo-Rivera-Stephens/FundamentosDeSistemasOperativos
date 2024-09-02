@@ -12,17 +12,19 @@ void killsignal(){
 
 int init(){
 
+    signal(SIGTERM, killsignal);
+
     int pid = getpid();  
     FILE *archivo = fopen("pid.txt", "w"); 
 
     if (archivo == NULL) {
-        perror("Error al abrir el archivo");
-        return;
+        printf("Error al abrir el archivo");
+        return 0;
     }
 
     fprintf(archivo, "%d\n", pid); 
     fclose(archivo);
-    
+
 
     for (int i = 0; i<6; i++) {
         if (fork() == 0) {
