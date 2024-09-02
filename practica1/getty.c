@@ -30,7 +30,7 @@ int validate_username(char *username, char *password){
     return 0;
 }
 
-void getty(){
+void getty(int pid_padre){
     char username[256];
     char password[256];
 
@@ -48,7 +48,7 @@ void getty(){
             int pid=fork();
 
             if (pid==0){
-                execlp("./sh.exe","sh.exe",NULL);
+                execlp("./sh.exe","sh.exe", pid_padre ,NULL);
             }
             else{
                 wait(NULL);
@@ -63,6 +63,6 @@ void getty(){
     }
 }
 
-int main(){
-    getty();
+int main(int argc){
+    getty(argc);
 }

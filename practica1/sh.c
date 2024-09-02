@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/wait.h>
 
-int main() {
+int main(int argc) {
     char command[100];
     char *args[20];
 
@@ -20,7 +20,7 @@ int main() {
         }
         if (strcmp(command, "shutdown") == 0) {
             printf("Apagando...\n");
-            kill(0, SIGKILL);
+            kill(argc, SIGTERM);
         }
 
         int i = 0;
