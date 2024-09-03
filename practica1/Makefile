@@ -4,6 +4,9 @@ CC=gcc
 all: init.exe sh.exe getty.exe
 	./init.exe
 
+start:
+	echo "Iniciando el proceso de compilacion"
+
 init.exe: init.o
 	$(CC) -o init.exe init.o
 
@@ -25,5 +28,3 @@ getty.o: getty.c
 clean:
 	rm -f *.o *.exe
 
-start:
-	echo "Iniciando el proceso de compilacion"
