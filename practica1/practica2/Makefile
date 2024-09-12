@@ -1,7 +1,7 @@
 # Variables
 CC=gcc
 
-all: start clean hilos.exe nojilos.exe
+all: start clean hilos.exe nohilos.exe
 
 
 
