@@ -7,7 +7,6 @@
 double area = 0.0;
 pthread_mutex_t mutex;  
 
-// Función para calcular la altura en ese punto, donde y siempre sera el Radio
 double raiz(double x, double y) {
     return sqrt(y * y - x * x);
 }
@@ -19,11 +18,10 @@ typedef struct {
     int i;
 } HiloArgs;
 
-// Función que ejecutarán los hilos
 void* calcular_trapecio(void* args) {
     HiloArgs* datos = (HiloArgs*) args;
-    double x_i = datos->a + datos->i * datos->h; //base, o x donde termina esa base
-    double resultado = 2 * raiz(x_i, datos->radio);  // Calcular el área para el punto x_i
+    double x_i = datos->a + datos->i * datos->h; 
+    double resultado = 2 * raiz(x_i, datos->radio);  
 
     pthread_mutex_lock(&mutex);
     area += resultado;
@@ -37,16 +35,14 @@ double sistema_de_trapecios(double radio, int n) {
     double b = radio;
     double h = (b - a) / n;
 
-    // Inicializar el área con los extremos
     pthread_mutex_lock(&mutex);
     area = raiz(a, radio) + raiz(b, radio);
     pthread_mutex_unlock(&mutex);
 
-    pthread_t hilos[n];  // Arreglo de hilos
-    HiloArgs args[n];  // Arreglo para almacenar los argumentos de cada hilo
+    pthread_t hilos[n];  
+    HiloArgs args[n];  
     HiloArgs aux;
 
-    // Crear los hilos para calcular los trapecios
     for (int i = 1; i < n; i++) {
         aux.a = a;
         aux.h = h;
@@ -57,12 +53,10 @@ double sistema_de_trapecios(double radio, int n) {
         pthread_create(&hilos[i], NULL, calcular_trapecio, (void*)&args[i]);
     }
 
-    // Esperar a que todos los hilos terminen
     for (int i = 1; i < n; i++) {
         pthread_join(hilos[i], NULL);
     }
 
-    // Calcular el área final
     pthread_mutex_lock(&mutex);
     area = (h / 2) * area;
     pthread_mutex_unlock(&mutex);
@@ -75,22 +69,20 @@ int main() {
     int n;
     double resultado;
 
-    // Inicializar el mutex
     pthread_mutex_init(&mutex, NULL);
 
-    // Pedir datos al usuario
     printf("Introduce el radio que desees utilizar: ");
     scanf("%lf", &radio);
     printf("¿En cuántos trapecios quieres dividirlo? ");
     scanf("%d", &n);
 
-    time_t start_time, end_time;
+    clock_t start_time, end_time;
     double cpu_time_used;
 
 
-    start_time = time(NULL);
+    start_time = clock();
     resultado = sistema_de_trapecios(radio, n);
-    end_time = time(NULL);
+    end_time = clock();
 
     printf("Esta es el área del cuarto de círculo: %f\n", resultado);
     printf("Esta es el área del círculo completo: %f\n", resultado * 4);
