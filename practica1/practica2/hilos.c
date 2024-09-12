@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <pthread.h>
+#include <time.h> 
 
 
 double area = 0.0;
@@ -51,7 +52,7 @@ double sistema_de_trapecios(double radio, int n) {
         aux.h = h;
         aux.radio = radio;
         aux.i = i;
-        
+
         args[i] = aux;
         pthread_create(&hilos[i], NULL, calcular_trapecio, (void*)&args[i]);
     }
@@ -83,12 +84,18 @@ int main() {
     printf("¿En cuántos trapecios quieres dividirlo? ");
     scanf("%d", &n);
 
-    // Calcular el área
+    clock_t start_time, end_time;
+    double cpu_time_used;
+
+
+    start_time = clock();
     resultado = sistema_de_trapecios(radio, n);
+    end_time = clock();
 
     printf("Esta es el área del cuarto de círculo: %f\n", resultado);
+    printf("Esta es el área del círculo completo: %f\n", resultado * 4);
+    printf("Tiempo de ejecución: %f segundos\n", cpu_time_used);
 
-    // Destruir el mutex
     pthread_mutex_destroy(&mutex);
 
     return 0;
