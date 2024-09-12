@@ -84,13 +84,13 @@ int main() {
     printf("¿En cuántos trapecios quieres dividirlo? ");
     scanf("%d", &n);
 
-    clock_t start_time, end_time;
+    time_t start_time, end_time;
     double cpu_time_used;
 
 
-    start_time = clock();
+    start_time = time(NULL);
     resultado = sistema_de_trapecios(radio, n);
-    end_time = clock();
+    end_time = time(NULL);
 
     printf("Esta es el área del cuarto de círculo: %f\n", resultado);
     printf("Esta es el área del círculo completo: %f\n", resultado * 4);

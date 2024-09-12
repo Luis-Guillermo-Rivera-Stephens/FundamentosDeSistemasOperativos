@@ -30,7 +30,7 @@ int main(){
     double resultado;
 
     // Variables para medir el tiempo
-    clock_t start_time, end_time;
+    time_t start_time, end_time;
     double cpu_time_used;
 
     printf("Introduce el radio que desees utilizar: ");
@@ -38,9 +38,9 @@ int main(){
     printf("En cuantos trapecios quieres dividirlo: ");
     scanf("%d", &n);
 
-    start_time = clock();
+    start_time = time(NULL);
     resultado = sistema_de_trapecios(radio, n);
-    end_time = clock();
+    end_time = time(NULL);
 
     cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
 
