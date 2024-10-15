@@ -49,7 +49,7 @@ void proc(int proc_num) {
     // Señala al maestro que ha terminado
     printf("Sending a signal to the master process");
     sem_post(sem_prod);
-    printf("Exit process %d", proc_num)
+    printf("Exit process %d", proc_num);
     exit(0);
 }
 
