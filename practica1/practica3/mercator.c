@@ -33,10 +33,12 @@ double get_member(int n, double x) {
 }
 
 void proc(int proc_num) {
+    printf("Starting production process #%d", proc_num);
     int i;
     
     // Espera a la señal del maestro para empezar
     sem_wait(sem_master);
+    printf("Signal recieved");
     
     // Cada proceso realiza su cálculo
     shared->sums[proc_num] = 0;
@@ -45,12 +47,15 @@ void proc(int proc_num) {
     }
     
     // Señala al maestro que ha terminado
+    printf("Sending a signal to the master process");
     sem_post(sem_prod);
+    printf("Exit process %d", proc_num)
     exit(0);
 }
 
 void master_proc() {
     int i;
+    printf("Starting master process");
     // Leer valor de x desde el archivo
     FILE *fp = fopen("entrada.txt", "r");
     if (fp == NULL)
@@ -61,11 +66,13 @@ void master_proc() {
     
     // Señala a los hijos para que comiencen
     for (i = 0; i < NPROCS; i++) {
+        printf("Allowing 1+");
         sem_post(sem_master);  // Desbloquea a todos los hijos
     }
     
     // Espera a que todos los hijos terminen
     for (i = 0; i < NPROCS; i++) {
+        printf("waiting production %d....", i);
         sem_wait(sem_prod);
     }
     

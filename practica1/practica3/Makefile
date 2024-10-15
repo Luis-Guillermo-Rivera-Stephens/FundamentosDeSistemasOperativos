@@ -1,12 +1,9 @@
 CC=gcc
 
-all: start clean mercator.exe exec
-
-exec:
-	.\mercator.exe
+all: start clean mercator.exe
 
 mercator.exe: mercator.o
-    $(CC)-o mercator.exe mercator.o -lm
+	$(CC) -o mercator.exe mercator.o -lm
 
 mercator.o: mercator.c
     $(CC) -c mercator.c
