@@ -55,7 +55,7 @@ void proc(int proc_num) {
         shared->sums[proc_num] += get_member(i+1, shared->x_val);
     
     msg_send.mtype = MASTER_MSGTYPE;
-    printf("Sending the message")
+    printf("Sending the message");
     msgsnd(master_qid, &msg_send, 0, IPC_NOWAIT);
     
     exit(0);
