@@ -30,6 +30,7 @@ int proc_qid;
 int master_qid;
 
 double get_member(int n, double x) {
+    printf("Obteniendo un miembro");
     int i;
     double numerator = 1;
     for(i=0; i<n; i++)
@@ -41,10 +42,12 @@ double get_member(int n, double x) {
 }
 
 void proc(int proc_num) {
+    printf("Process number: %d", proc_num);
     int i;
     struct msg_buffer msg_rcv, msg_send;
     
     msg_rcv.mtype = PROC_MSGTYPE;
+    printf("Recieving a message");
     msgrcv(proc_qid, &msg_rcv, 0, PROC_MSGTYPE, 0);
     
     shared->sums[proc_num] = 0;
@@ -52,12 +55,14 @@ void proc(int proc_num) {
         shared->sums[proc_num] += get_member(i+1, shared->x_val);
     
     msg_send.mtype = MASTER_MSGTYPE;
+    printf("Sending the message")
     msgsnd(master_qid, &msg_send, 0, IPC_NOWAIT);
     
     exit(0);
 }
 
 void master_proc() {
+    printf("Master process");
     int i;
     struct msg_buffer msg_send, msg_rcv;
     
@@ -70,11 +75,13 @@ void master_proc() {
     
     msg_send.mtype = PROC_MSGTYPE;
     
+    printf("Sending the message");
     for(i = 0; i < NPROCS; i++) {
         msgsnd(proc_qid, &msg_send, 0, IPC_NOWAIT);
     }
     
     for(i = 0; i < NPROCS; i++) {
+        printf("Waiting for the message");
         msgrcv(master_qid, &msg_rcv, 0, MASTER_MSGTYPE, 0);
     }
     

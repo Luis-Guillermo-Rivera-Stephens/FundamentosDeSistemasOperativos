@@ -9,7 +9,7 @@ mercator.o: mercator.c
     $(CC) -c mercator.c
 
 clean:
-    rm -f *.o *.exe
+	rm -f *.o *.exe
 
 start:
-    echo "Iniciando el proceso de compilacion"
+	echo "Iniciando el proceso de compilacion"
